@@ -21,6 +21,7 @@ function init(){
 function animate() {
     // erase the HTMLCanvasElement
     context.clearRect(0,0,canvas.width,canvas.height);
+    checkEdges();
     update();   // update location
     draw();     // render
     requestAnimationFrame(animate); // next cycle
@@ -30,6 +31,15 @@ function animate() {
 function update() {
     x += dx;    // update x coordinate of location with x velocity
     y += dy;    // update y coordinate of location with y velocity
+}
+
+function checkEdges() {
+  if(x<0 || x>canvas.width){
+    dx *= -1
+  }
+  if(y<0 || y>canvas.height){
+    dy *= -1
+  }
 }
 
 // render a circle
