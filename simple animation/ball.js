@@ -1,6 +1,6 @@
 class Ball{
   constructor (x, y, dx, dy, radius, color){
-    this.x = x;
+    this.x = x; //declare instance variables
     this.y = y;
     this.dx = dx;
     this.dy = dy;
@@ -23,7 +23,7 @@ class Ball{
     context.stroke();
   }
   checkEdges(){
-      if(this.x<0 || this.x>canvas.width){
+      if(this.x<0 || this.x>canvas.width){ //instance variable to canvas height
         this.dx *= -1
       }
       if(this.y<0 || this.y>canvas.height){
