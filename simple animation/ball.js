@@ -9,11 +9,11 @@ class Ball{
     this.canvas = document.getElementById("cnv");
     this.context = this.canvas.getContext("2d");
   }
-  update = function(){
+  update(){
     this.x += this.dx;    // update x coordinate of location with x velocity
     this.y += this.dy;
   }
-  draw = function(){
+  draw(){
     context.beginPath();    // clear old path
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
     context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -22,10 +22,12 @@ class Ball{
     context.fill();     // render the fill
     context.stroke();
   }
-  loadBalls = function{
-  let this.x = Math.random()*100;
-  let this.y = Math.random()*100;
-  let this.dx = Math.random()*10 - 5;
-  let this.dy = Math.random()*10 - 5;
-  let this.radius = 15;
+  checkEdges(){
+      if(this.x<0 || this.x>canvas.width){
+        this.dx *= -1
+      }
+      if(this.y<0 || this.y>canvas.height){
+        this.dy *= -1
+      }
+  }
 }
