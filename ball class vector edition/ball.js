@@ -1,4 +1,4 @@
-class Ball{
+function Ball (location, velocity){
   constructor (x, y, dx, dy, radius, color){
     this.x = x; //declare instance variables
     this.y = y;
