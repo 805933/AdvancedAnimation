@@ -16,7 +16,7 @@ class Ball{
     this.context = this.canvas.getContext("2d");
   }
   update(){
-    this.loc.add(this.vel)
+    //this.loc.add(this.vel)
     this.loc.x += this.vel.x;    // update x coordinate of location with x velocity
     this.loc.y += this.vel.y;
   }
@@ -30,21 +30,25 @@ class Ball{
     context.stroke();
   }
   checkEdges(){
-      if(this.loc.x<0 || this.loc.x>canvas.width){ //instance variable to canvas height
+      if(this.loc.x < 0 || this.loc.x >canvas.width){ //instance variable to canvas height
         this.vel.x *= -1
       }
       if(this.loc.y<0 || this.loc.y>canvas.height){
         this.vel.y *= -1
       }
   }
+  /*
   colorChange(){
     for (let i = 0; i<balls.length; i++){
-      if (balls[i].x && balls[i].y == balls[i].x && balls[i].y){
-        balls[i].color = "orange";
-      }
-      else{
-        balls[i].color = "black";
+      for (let k = 0; k<balls.length; k++){
+        if (balls[i].loc == balls[k].loc){
+          balls[i].color = "orange";
+        }
+        else{
+          balls[i].color = "black";
+        }
       }
     }
   }
+  */
 }

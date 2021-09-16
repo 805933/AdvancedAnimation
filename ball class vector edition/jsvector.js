@@ -97,7 +97,8 @@ JSVector.prototype.distance = function(v2){
 
 // Get square of the distance between this vector and another one
 JSVector.prototype.distanceSquared = function(v2){
-
+  let temp = JSVector.subGetNew(this,v2);
+  return Math.pow(temp.getMagnitude(),2);
 }
 
 // Rotate this vector by some number of radians
