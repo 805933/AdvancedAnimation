@@ -3,9 +3,7 @@ window.addEventListener("load", init);
 //IMPORTANT: For looking up new terms, go to http://developer.mozilla.org
 // global variables
 var canvas, context;
-var ball = {}; //may not need
-var balls = []; //make balls array
-var specialBalls = []; //array of special balls that contains attraction/repulsion balls
+var target, triangle;
 
 function init(){
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement
@@ -24,16 +22,9 @@ function animate() {
 // erase the HTMLCanvasElement
   context.clearRect(0,0,canvas.width,canvas.height);
   window.requestAnimationFrame(animate);
-  for (let i = 0; i<balls.length; i++){
-    //balls[i].run();
-    balls[i].draw(); //run functions for every loaded ball
-    balls[i].update();
-    balls[i].checkEdges();
-    //specialBalls[0].draw();
-    //specialBalls[1].draw();
-    //balls[i].colorChange();
+  target.run();
+  triangle.run();
   }
-}
 /*
   function loadSpecial(){
     let x = 50;
@@ -53,7 +44,7 @@ function animate() {
     let y = 400;
     let r = 20;
     let color = "blue";
-    balls.push(new Target(x, y, r, color))
+    target = new Target(x, y, r, color)
   }
 
   function loadBalls(n){ //initialization and creation of ball instances
@@ -64,6 +55,6 @@ function animate() {
   let dy = Math.random() + 2;
   let r = 40;
   let color = "red";
-  balls.push(new Triangle(x, y, dx, dy, r, color)) //create new ball instance with set variables
+  triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
     }
   }

@@ -18,8 +18,13 @@ class Target{
     this.canvas = document.getElementById("cnv");
     this.context = this.canvas.getContext("2d");
   }
+  run(){
+    this.update();
+    this.draw();
+    this.checkEdges();
+  }
   update(){
-    this.loc.getDirection()
+    this.loc.getDirection();
     //this.loc.add(this.vel)
     //this.loc.x += this.vel.x;    // update x coordinate of location with x velocity
     //this.loc.y += this.vel.y;
