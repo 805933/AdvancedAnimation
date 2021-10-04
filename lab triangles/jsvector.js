@@ -105,15 +105,22 @@ JSVector.prototype.distanceSquared = function(v2){
 // using the rotation matrix |  cos   -sin  |
 //                           |  sin   +cos  |
 JSVector.prototype.rotate = function(angle) {
-
+  let x = this.x;
+  let y = this.y;
+  let cos = Math.cos(angle);
+  let sin = Math.sin(angle);
+  this.x = x*cos - y*sin;
+  this.y = x*sin + y*cos;
 }
 
 // Get the angle between this vector and another one
 JSVector.prototype.angleBetween = function(v2){
+  return(Math.abs(getDirection()-v2.getDirection()));
 }
 
 // Make a copy of this vector
 JSVector.prototype.copy = function(){
+  return (new JSVector(this.x, this.y));
  }
 
 // Override inherited toString() to describe this instance
