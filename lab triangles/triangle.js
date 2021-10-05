@@ -3,7 +3,7 @@ class Triangle{
     this.loc = new JSVector(x,y); //new creates a new instance
     //have a vector that already has an x and y
     this.vel = new JSVector(dx,dy);
-    this.acc = new JSVector(x,y);
+    this.acc = new JSVector(0,0);
     //have a vector that has velocity (use magnitude and direction)
     //vector has magnitude and direction and so does velocity and acceleration
     //so velocity can be represented as a vector (and so can acceleration)
@@ -19,23 +19,26 @@ class Triangle{
   }
 
   update(){
-    this.acc = JSVector.subGetNew(triangle,target);
-    //this.loc.add(this.vel)
-    this.loc.x += this.vel.x;    // update x coordinate of location with x velocity
-    this.loc.y += this.vel.y;
+    this.acc = JSVector.subGetNew(target.loc,this.loc);
+    this.acc.normalize();
+    this.acc.multiply(.1);
+    this.vel.add(this.acc);
+    this.vel.limit(3);
+    this.loc.add(this.vel);
   }
   draw(){
     context.save();
     context.translate(this.loc.x, this.loc.y);
-    context.rotate(this.vel.getDirection());
+    context.rotate(this.vel.getDirection()+Math.PI);
     context.beginPath();    // clear old path
-    context.moveTo(0, 0);
-    context.lineTo(0-this.radius,this.radius/4);
-    context.lineTo(0-this.radius,this.radius/4);
+    context.moveTo(this.radius, this.radius);
+    context.lineTo(-this.radius,this.radius/2);
+    context.lineTo(this.radius,this.radius/2);
     context.strokeStyle = "black";  // color to fill
     context.fillStyle = this.color;     // color to stroke
     context.fill();     // render the fill
     context.stroke();
+
     context.restore();
   }
   checkEdges(){

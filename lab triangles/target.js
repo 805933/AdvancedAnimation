@@ -25,9 +25,14 @@ class Target{
   }
   update(){
     this.loc.getDirection();
-    //this.loc.add(this.vel)
-    //this.loc.x += this.vel.x;    // update x coordinate of location with x velocity
-    //this.loc.y += this.vel.y;
+    if (this.loc.distance(triangle.loc)<100){
+      this.loc = new JSVector(Math.random()*canvas.width,Math.random()*canvas.height);
+    }
+
+    /*
+    If the distance is less than 200, find a new location.
+    */
+
   }
   draw(){
     context.beginPath();    // clear old path
