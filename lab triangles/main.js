@@ -25,20 +25,6 @@ function animate() {
   target.run();
   triangle.run();
   }
-/*
-  function loadSpecial(){
-    let x = 50;
-    let y = 50;
-    let dx = 10;
-    let dy = 10;
-    let r = 20;
-    let color = "green";
-    specialBalls.push(new Ball(x, y, dx, dy, r, color));
-    color = "red";
-    x = 100;
-    specialBalls.push(new Ball(x, y, dx, dy, r, color));
-  }
-*/
   function loadTarget(){
     let x = 500;
     let y = 400;
@@ -48,13 +34,13 @@ function animate() {
   }
 
   function loadBalls(n){ //initialization and creation of ball instances
-  for (let i = 0; i<n; i++){
-  let x = Math.random()*150;
-  let y = Math.random()*150;
-  let dx = Math.random() + 2;
-  let dy = Math.random() + 2;
-  let r = 40;
-  let color = "red";
-  triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
+    for (let i = 0; i<n; i++){
+      let x = Math.random()*150;
+      let y = Math.random()*150;
+      let dx = Math.random() + 2;
+      let dy = Math.random() + 2;
+      let r = 40;
+      let color = "red";
+      triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
     }
   }
