@@ -6,6 +6,7 @@ function init(){
   canvas = document.getElementById("cnv");
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
   context = canvas.getContext("2d");
+  createSegment();
   animate();
 }
 function animate(){
@@ -16,10 +17,10 @@ function animate(){
   }
 }
 function createSegment(){
-  for (let i = 0; i<3; i++){
+  for (let i = 0; i<5; i++){
     let size = 30;
     let x = Math.random() * 100;
     let y = Math.random() * 100;
-    segments.push(new Segment(size,x,y));
+    segments.push(new Segment(size,x,y))
   }
 }

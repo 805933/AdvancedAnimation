@@ -1,5 +1,5 @@
 class Segment{
-  constructor (size){
+  constructor (size, x, y){
     this.loc = new JSVector(x,y); //new creates a new instance
     //have a vector that already has an x and y
     //this.vel = new JSVector(dx,dy);
@@ -16,12 +16,10 @@ class Segment{
     //context.save();
     //context.translate(this.loc.x, this.loc.y);
     //context.rotate(this.vel.getDirection()+Math.PI);
-    //context.beginPath();    // clear old path
+    context.beginPath();
     context.moveTo(this.size, this.size);
-    //context.lineTo(-this.radius,this.radius/2);
     context.lineTo(this.size,this.size/2);
     context.strokeStyle = "black";  // color to fill
-    //context.fillStyle = this.color;     // color to stroke
     context.fill();     // render the fill
     context.stroke();
     //context.restore();
