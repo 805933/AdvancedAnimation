@@ -1,5 +1,5 @@
 window.addEventListener("load", init);
-var canvas, context;
+var canvas, context, head;
 var segments = [];
 function init(){
   // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement
@@ -15,12 +15,22 @@ function animate(){
   for (let i = 0; i<segments.length; i++){
     segments[i].run();
   }
+  head.run();
+
 }
 function createSegment(){
   for (let i = 0; i<5; i++){
-    let size = 30;
+    let size = 20;
     let x = Math.random() * 100;
     let y = Math.random() * 100;
-    segments.push(new Segment(size,x,y))
+    let dx = 2;
+    let dy = 2;
+    if (i == 0){
+      head = new Head(x,y,dx,dy,size);
+    }
+    else{
+      size = 15;
+      segments.push(new Segment(x,y,dx,dy,size))
+    }
   }
 }
