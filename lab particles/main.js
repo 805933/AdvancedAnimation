@@ -16,6 +16,7 @@ function animate(){
     particles[i].run();
     if (particles[i].isDead() == true){
       particles.splice(i,1);
+      i--;
     }
   }
 
@@ -23,16 +24,17 @@ function animate(){
 }
 function createParticle(){
   for (let i = 0; i<1; i++){
-    let radius = 20;
-    let x = canvas.width/2 + Math.random()*100;
-    let y = canvas.height/2 +Math.random()*100;
-    let dx = Math.random()*5 - 3;
-    let dy = Math.random()*5 - 3;
+    let radius = 15;
+    let x = canvas.width/2 + Math.random()*100-50;
+    let y = canvas.height/2 +Math.random()*100-50;
+    let dx = Math.random()*5 - 2.5;
+    let dy = Math.random()*7.5 - 3.75;
     let r = Math.floor(Math.random()*255);
     let g = Math.floor(Math.random()*255);
     let b = Math.floor(Math.random()*255);
-    let color = "rgb("+r+","+g+","+b+")"//rgb(Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255))
-    let life = Math.random()*60 + 120
-    particles.push(new Particle(x, y, dx, dy, radius, color, life))
+    let a = 1;
+    let clr = "rgba("+r+","+g+","+b+","+a+")"
+    let life = Math.floor(Math.random()*90)+90;
+    particles.push(new Particle(x, y, dx, dy, radius, clr, life, r, g, b))
     }
   }
