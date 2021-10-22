@@ -12,7 +12,7 @@ class Segment{
     this.update();
   }
   draw(){
-    //context.save();
+    context.save();
     context.translate(this.loc.x, this.loc.y);
     context.rotate(this.vel.getDirection()+Math.PI);
     context.beginPath();
@@ -20,7 +20,7 @@ class Segment{
     context.strokeStyle = "black";  // color to fill
     context.fill();     // render the fill
     context.stroke();
-    //context.restore();
+    context.restore();
   }
   update(){
     this.loc.add(this.vel);
