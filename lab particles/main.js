@@ -6,11 +6,11 @@ function init(){
   canvas = document.getElementById("cnv");
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
   context = canvas.getContext("2d");
-  createParticle();
   animate();
 }
 function animate(){
   context.clearRect(0,0,canvas.width,canvas.height);
+  createParticle();
   window.requestAnimationFrame(animate);
   for (let i = 0; i<particles.length; i++){
     particles[i].run();
@@ -22,7 +22,7 @@ function animate(){
 
 }
 function createParticle(){
-  for (let i = 0; i<5; i++){
+  for (let i = 0; i<1; i++){
     let radius = 20;
     let x = canvas.width/2 + Math.random()*100;
     let y = canvas.height/2 +Math.random()*100;
