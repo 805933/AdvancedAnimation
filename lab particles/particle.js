@@ -1,11 +1,13 @@
 class Particle{
-  constructor (x, y, dx, dy, radius){
+  constructor (x, y, dx, dy, radius, color, life){
     this.loc = new JSVector(x,y);
     this.vel = new JSVector(dx,dy);
-    this.acc = new JSVector(0,-.1);
+    this.acc = new JSVector(0,.1);
     this.radius = radius;
+    this.color = color;
     this.canvas = document.getElementById("cnv");
     this.context = this.canvas.getContext("2d");
+    this.life = life;
   }
   run(){
     this.update();
@@ -14,12 +16,21 @@ class Particle{
 
   update(){
     this.loc.add(this.vel);
-    this.vel.sub(this.acc);
+    this.vel.add(this.acc);
     if (this.loc.x <0 || this.loc.x > canvas.width){
       this.vel.x *= -1
     }
     if(this.loc.y<0 || this.loc.y>canvas.height){
       this.vel.y *= -1
+    }
+    this.life -= 1;
+  }
+  isDead(){
+    if (this.life <= 0){
+      return true;
+    }
+    else{
+      return false;
     }
   }
   draw(){

@@ -30,6 +30,8 @@ class Segment{
     if(this.loc.y<0 || this.loc.y>canvas.height){
       this.vel.y *= -1
     }
-
+  }
+  follow(){
+    
   }
 }
