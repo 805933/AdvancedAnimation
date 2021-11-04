@@ -13,13 +13,15 @@ function animate(){
   createBorder(); //creates border every frame
   window.requestAnimationFrame(animate);
     border.run();
+    border.draw();
     }
 
 function createBorder(){
     //let radius = 15;
-    let x = canvas.width/2 + Math.random()*100-50; //middle of the canvas, with up to 50 pixels of variation in each direction
-    let y = canvas.height/2 +Math.random()*100-50;
+    let x = 0;
+    let y = 0;
+    let width = 15;
     //let dx = Math.random()*5 - 2.5;
     //let dy = Math.random()*7.5 - 3.75;
-    border = new Border(x, y)
+    border = new Border(x, y, width)
     }
