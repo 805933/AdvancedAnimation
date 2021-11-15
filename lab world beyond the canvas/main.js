@@ -16,6 +16,8 @@ function init(){
   context2 = canvas2.getContext("2d");
   canvasLocation = new JSVector(0,0);
   window.addEventListener("keypress", keyPressHandler);
+  loadBalls(1); //load a specified number of balls
+  loadTarget();
   animate();
 }
 function animate(){
@@ -60,7 +62,30 @@ function animate(){
   context2.strokeStyle = "rgba(128,128,128,1)";
   context2.stroke();
   context2.restore();
+
+  target.run();
+  triangle.run();
+  triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
   window.requestAnimationFrame(animate);
+  }
+  function loadTarget(){
+    let x = 500;
+    let y = 400;
+    let r = 20;
+    let color = "blue";
+    target = new Target(x, y, r, color)
+  }
+
+  function loadBalls(n){ //initialization and creation of ball instances
+    for (let i = 0; i<n; i++){
+      let x = Math.random()*150;
+      let y = Math.random()*150;
+      let dx = Math.random() + 2;
+      let dy = Math.random() + 2;
+      let r = 40;
+      let color = "red";
+      triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
+    }
     }
 function keyPressHandler(event){
   if(event.code == "KeyW"){
