@@ -21,12 +21,13 @@ class Target{
   run(){
     this.update();
     this.draw();
-    this.checkEdges();
+    this.draw2();
+    //this.checkEdges();
   }
   update(){
     this.loc.getDirection();
     if (this.loc.distance(triangle.loc)<100){
-      this.loc = new JSVector(Math.random()*canvas.width,Math.random()*canvas.height);
+      this.loc = new JSVector(Math.random()*bounds.width-bounds.width/2,Math.random()*bounds.height-bounds.height/2);
     }
 
     /*
@@ -42,6 +43,17 @@ class Target{
     context.fillStyle = this.color;     // color to stroke
     context.fill();     // render the fill
     context.stroke();
+  }
+  draw2(){
+    context2.beginPath();    // clear old path
+    //context2.scale(0.1,0.1);
+    //context2.translate(bounds.width/2,bounds.height/2);
+    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
+    context2.arc(this.loc.x, this.loc.y, this.radius, 0, 2 * Math.PI);
+    context2.strokeStyle = "black";  // color to fill
+    context2.fillStyle = this.color;     // color to stroke
+    context2.fill();     // render the fill
+    context2.stroke();
   }
   checkEdges(){
       if(this.loc.x < 0 || this.loc.x >canvas.width){ //instance variable to canvas height

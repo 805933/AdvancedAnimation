@@ -15,7 +15,8 @@ class Triangle{
   run(){
     this.update();
     this.draw();
-    this.checkEdges();
+    this.draw2();
+    //this.checkEdges();
   }
 
   getCanvasLocation(x, y){
@@ -29,7 +30,7 @@ class Triangle{
     this.vel.add(this.acc);
     this.vel.limit(3);
     this.loc.add(this.vel);
-    this.loc.add(this.canvasLoc);
+    //this.loc.add(this.canvasLoc);
   }
   draw(){
     context.save();
@@ -46,12 +47,18 @@ class Triangle{
 
     context.restore();
   }
-  checkEdges(){
-      if(this.loc.x < 0 || this.loc.x >canvas.width){ //instance variable to canvas height
-        this.vel.x *= -1
-      }
-      if(this.loc.y<0 || this.loc.y>canvas.height){
-        this.vel.y *= -1
-    }
+  draw2(){
+    context2.save();
+    context2.translate(this.loc.x, this.loc.y);
+    context2.rotate(this.vel.getDirection()+Math.PI);
+    context2.beginPath();    // clear old path
+    context2.moveTo(this.radius, this.radius);
+    context2.lineTo(-this.radius,this.radius/2);
+    context2.lineTo(this.radius,this.radius/2);
+    context2.strokeStyle = "black";  // color to fill
+    context2.fillStyle = this.color;     // color to stroke
+    context2.fill();     // render the fill
+    context2.stroke();
+    context2.restore();
   }
 }

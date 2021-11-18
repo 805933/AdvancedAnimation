@@ -36,6 +36,9 @@ function animate(){
   context.rect(bounds.top, bounds.left, bounds.width, bounds.height);
   context.strokeStyle = 'green';
   context.stroke();
+  //triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
+  triangle.draw();
+  target.draw();
   context.restore();
 
   context2.clearRect(0,0,canvas2.width,canvas2.height);
@@ -61,11 +64,12 @@ function animate(){
   context2.rect(canvasLocation.x,canvasLocation.y,canvas.width,canvas.height);
   context2.strokeStyle = "rgba(128,128,128,1)";
   context2.stroke();
+  target.update();
+  target.draw2();
+  triangle.update();
+  triangle.draw2();
   context2.restore();
 
-  target.run();
-  triangle.run();
-  triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
   window.requestAnimationFrame(animate);
   }
   function loadTarget(){
