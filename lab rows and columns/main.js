@@ -37,6 +37,13 @@ function animate(){
   context.strokeStyle = 'green';
   context.stroke();
   //triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
+for (i=0; i<2; i++){
+  for(k = 0; k<20; k++){
+    context.rect(k*100,i*100,k*100+100,i*100+100);
+  }
+}
+  context.strokeStyle = 'green';
+  context.stroke();
   triangle.draw();
   target.draw();
   context.restore();
@@ -91,7 +98,6 @@ function animate(){
       triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
     }
     }
-
 function keyPressHandler(event){
   if(event.code == "KeyW"){
     canvasLocation.y -= 10;
