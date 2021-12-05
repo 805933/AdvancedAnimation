@@ -1,5 +1,5 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2
+var canvas, context, canvasLocation, canvas2, context2, grid
 bounds = {
   width: 2000,
   height: 2000,
@@ -18,6 +18,19 @@ function init(){
   window.addEventListener("keypress", keyPressHandler);
   loadBalls(1); //load a specified number of balls
   loadTarget();
+  var cellSize = 50;
+  grid = [];
+  for (var i = 0; i<bounds.width/cellSize; i++){
+    var row = [];
+    for (var j = 0; j<bounds.height/cellSize; j++){
+      var x = j * cellSize +bounds.left;
+      var y = i * cellSize + bounds.top;
+      var cell = new Cell(x, y, cellSize, context, i, j);
+      row.push(cell);
+    }
+    grid.push(row);
+  }
+  console.log(grid);
   animate();
 }
 function animate(){
@@ -25,6 +38,7 @@ function animate(){
   context.save();
   context.beginPath();
   context.translate(-canvasLocation.x,-canvasLocation.y);
+  /*
   context.strokeStyle = 'red';
   context.lineWidth = 5;
   context.moveTo(-2000,0);
@@ -37,16 +51,24 @@ function animate(){
   context.strokeStyle = 'green';
   context.stroke();
   //triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
-for (i=0; i<2; i++){
+for (i=0; i<20; i++){
   for(k = 0; k<20; k++){
     context.rect(k*100,i*100,k*100+100,i*100+100);
   }
 }
   context.strokeStyle = 'green';
   context.stroke();
+  */
+
+  for (var i = 0; i<grid.length; i++){
+    for (var j = 0; j<grid[i].length; j++){
+      grid[i][j].draw();
+    }
+  }
   triangle.draw();
   target.draw();
   context.restore();
+
 
   context2.clearRect(0,0,canvas2.width,canvas2.height);
   context2.save();
