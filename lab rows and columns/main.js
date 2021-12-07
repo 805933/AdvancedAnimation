@@ -1,5 +1,6 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2, grid
+var canvas, context, canvasLocation, canvas2, context2, grid, occupied, cellX, cellY
+let mouseDown = false;
 bounds = {
   width: 2000,
   height: 2000,
@@ -16,21 +17,23 @@ function init(){
   context2 = canvas2.getContext("2d");
   canvasLocation = new JSVector(0,0);
   window.addEventListener("keypress", keyPressHandler);
-  loadBalls(1); //load a specified number of balls
-  loadTarget();
+  window.addEventListener("click", clickHandler);
+  //loadBalls(1); //load a specified number of balls ENABLE TRIANGLE
+  //loadTarget(); ENABLE TARGET
   var cellSize = 50;
   grid = [];
+  occupied = false;
   for (var i = 0; i<bounds.width/cellSize; i++){
     var row = [];
     for (var j = 0; j<bounds.height/cellSize; j++){
       var x = j * cellSize +bounds.left;
       var y = i * cellSize + bounds.top;
-      var cell = new Cell(x, y, cellSize, context, i, j);
+      var cell = new Cell(x, y, cellSize, context, i, j, occupied);
       row.push(cell);
     }
     grid.push(row);
   }
-  console.log(grid);
+  //console.log(grid);
   animate();
 }
 function animate(){
@@ -38,35 +41,21 @@ function animate(){
   context.save();
   context.beginPath();
   context.translate(-canvasLocation.x,-canvasLocation.y);
-  /*
-  context.strokeStyle = 'red';
-  context.lineWidth = 5;
-  context.moveTo(-2000,0);
-  context.lineTo(2000,0);
-  context.moveTo(0,-2000);
-  context.lineTo(0,2000);
-  context.stroke();
-  context.beginPath();
-  context.rect(bounds.top, bounds.left, bounds.width, bounds.height);
-  context.strokeStyle = 'green';
-  context.stroke();
-  //triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
-for (i=0; i<20; i++){
-  for(k = 0; k<20; k++){
-    context.rect(k*100,i*100,k*100+100,i*100+100);
-  }
-}
-  context.strokeStyle = 'green';
-  context.stroke();
-  */
 
   for (var i = 0; i<grid.length; i++){
     for (var j = 0; j<grid[i].length; j++){
+      if (mouseDown == true){
+        grid[i][j].checkOccupation(mouseX, mouseY, canvasLocation.x, canvasLocation.y);
+      }
       grid[i][j].draw();
+      //console.log(grid[i][j].getX());
     }
   }
+  mouseDown = false;
+/*
   triangle.draw();
   target.draw();
+  */
   context.restore();
 
 
@@ -93,14 +82,17 @@ for (i=0; i<20; i++){
   context2.rect(canvasLocation.x,canvasLocation.y,canvas.width,canvas.height);
   context2.strokeStyle = "rgba(128,128,128,1)";
   context2.stroke();
+/* ENABLE TARGET AND TRIANGLE
   target.update();
   target.draw2();
   triangle.update();
   triangle.draw2();
+  */
   context2.restore();
 
   window.requestAnimationFrame(animate);
   }
+/* ENABLE TARGET
   function loadTarget(){
     let x = 500;
     let y = 400;
@@ -108,7 +100,8 @@ for (i=0; i<20; i++){
     let color = "blue";
     target = new Target(x, y, r, color)
   }
-
+  */
+ /* ENABLE TRIANGLE
   function loadBalls(n){ //initialization and creation of ball instances
     for (let i = 0; i<n; i++){
       let x = Math.random()*150;
@@ -120,6 +113,8 @@ for (i=0; i<20; i++){
       triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
     }
     }
+    */
+
 function keyPressHandler(event){
   if(event.code == "KeyW"){
     canvasLocation.y -= 10;
@@ -141,4 +136,9 @@ function keyPressHandler(event){
     console.log(""+canvasLocation.x+","+canvasLocation.y+","+(800+canvasLocation.x)+","+(600+canvasLocation.y))
 
   }
+}
+function clickHandler(event){
+  mouseX = event.clientX-10;
+  mouseY = event.clientY-10;
+  mouseDown = true;
 }
