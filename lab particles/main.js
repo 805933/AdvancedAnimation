@@ -16,12 +16,12 @@ function animate(){
       createParticle(); //creates particle every frame
 
   }
-  window.requestAnimationFrame(animate);
   for (let i = 0; i<particles.length; i++){
     particles[i].run();
     if (particles[i].isDead() == true){
       particles.splice(i,1);
       i--; //stops rendering if the particle has 'died'
+  window.requestAnimationFrame(animate);
     }
   }
 

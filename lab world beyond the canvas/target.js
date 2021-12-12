@@ -21,7 +21,6 @@ class Target{
   run(){
     this.update();
     this.draw();
-    this.draw2();
     //this.checkEdges();
   }
   update(){

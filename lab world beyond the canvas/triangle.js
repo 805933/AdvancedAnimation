@@ -28,7 +28,7 @@ class Triangle{
     this.acc.normalize();
     this.acc.multiply(.1);
     this.vel.add(this.acc);
-    this.vel.limit(3);
+    this.vel.limit(4);
     this.loc.add(this.vel);
     //this.loc.add(this.canvasLoc);
   }

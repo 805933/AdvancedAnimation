@@ -12,21 +12,36 @@ class Particle{
     this.g = g;
     this.b = b;
     this.initialLife = this.life; //used to make sure that the opacity fades at a linear rate
+    //this.flipped = false;
   } //required for variation in the initialization
   run(){
     this.update();
     this.draw();
+    this.draw2();
+    //console.log(main.getFlipped());
+  }
+
+  flipped(isFlipped){
+    //console.log("flipped exists");
+    this.isFlipped = isFlipped;
   }
 
   update(){
     this.loc.add(this.vel); //adds velocity to location
-    this.vel.add(this.acc); //adds acceleration to velocity
+    if (this.isFlipped){
+      this.vel.sub(this.acc); //adds acceleration to velocity
+    }
+    else{
+      this.vel.add(this.acc);
+    }
+/*
     if (this.loc.x <0 || this.loc.x > canvas.width){
       this.vel.x *= -1 //flips x velocity if it touches the sides
     }
     if(this.loc.y<0 || this.loc.y>canvas.height){
       this.vel.y *= -1 //flips y velocity if it touches the ground or ceiling
     }
+    */
     this.life -= 1; //takes away part of the particle's life every frame
     this.clr = "rgba("+this.r+","+this.g+","+this.b+","+this.life/this.initialLife+")"
   } //adjusts opacity without affecting the pre-determined rgb values
@@ -45,5 +60,13 @@ class Particle{
     context.fillStyle = this.clr;
     context.fill();
     context.stroke();
+  }
+  draw2(){
+    context2.beginPath();
+    context2.arc(this.loc.x, this.loc.y, this.radius, 0, 2*Math.PI);
+    context2.strokeStyle = "rgba(0,0,0,"+this.life/this.initialLife+")"; //makes black but preserves opacity
+    context2.fillStyle = this.clr;
+    context2.fill();
+    context2.stroke();
   }
 }
