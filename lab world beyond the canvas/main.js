@@ -1,5 +1,7 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2
+var canvas, context, canvasLocation, canvas2, context2, mouseX, mouseY
+var particles = [];
+let mouseDown = false;
 bounds = {
   width: 2000,
   height: 2000,
@@ -16,6 +18,7 @@ function init(){
   context2 = canvas2.getContext("2d");
   canvasLocation = new JSVector(0,0);
   window.addEventListener("keypress", keyPressHandler);
+  window.addEventListener("click", clickHandler);
   loadBalls(1); //load a specified number of balls
   loadTarget();
   animate();
@@ -69,6 +72,9 @@ function animate(){
   triangle.update();
   triangle.draw2();
   context2.restore();
+  if (mouseDown){
+      createParticle(); //creates particle every frame
+  }
 
   window.requestAnimationFrame(animate);
   }
@@ -90,8 +96,32 @@ function animate(){
       let color = "red";
       triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
     }
+  }
+  for (let i = 0; i<particles.length; i++){
+    particles[i].run();
+    if (particles[i].isDead() == true){
+      particles.splice(i,1);
+      i--; //stops rendering if the particle has 'died'
     }
-
+  }
+  function createParticle(){
+    for (let i = 0; i<1; i++){ //Setting the value to >1 creates multiple particles each frame
+      let radius = 15;
+      let x = mouseX + Math.random()*100-50; //middle of the canvas, with up to 50 pixels of variation in each direction
+      let y = mouseY +Math.random()*100-50;
+      let dx = Math.random()*5 - 2.5; //initial velocity of x, can be anywhere from -2.5 to 2.5.
+      let dy = Math.random()*7.5 - 3.75; //can be anywhere from -3.75 to 3.75
+      let r = Math.floor(Math.random()*255);
+      let g = Math.floor(Math.random()*255);
+      let b = Math.floor(Math.random()*255);
+      let a = 1; //gives particle random color and sets to 100% opacity
+      let clr = "rgba("+r+","+g+","+b+","+a+")"
+      let life = Math.floor(Math.random()*90)+90; //particle can last from 1.5 to 3 seconds
+      particles.push(new Particle(x, y, dx, dy, radius, clr, life, r, g, b));
+      //console.log(mouseX + "   " + mouseY);
+      console.log("particle 'created' ")
+      }
+    }
 function keyPressHandler(event){
   if(event.code == "KeyW"){
     canvasLocation.y -= 10;
@@ -113,4 +143,9 @@ function keyPressHandler(event){
     console.log(""+canvasLocation.x+","+canvasLocation.y+","+(800+canvasLocation.x)+","+(600+canvasLocation.y))
 
   }
+}
+function clickHandler(event){
+  mouseX = event.clientX-10;
+  mouseY = event.clientY-10;
+  mouseDown = true;
 }

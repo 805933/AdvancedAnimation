@@ -1,16 +1,21 @@
 window.addEventListener("load", init);
-var canvas, context
+var canvas, context, mouseX, mouseY
 var particles = []; //fully aware of the fact that I'm using an array compared to something else
+let mouseDown = false;
 function init(){
   // https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement
   canvas = document.getElementById("cnv");
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
   context = canvas.getContext("2d");
+  window.addEventListener("click", clickHandler);
   animate();
 }
 function animate(){
   context.clearRect(0,0,canvas.width,canvas.height);
-  createParticle(); //creates particle every frame
+  if (mouseDown){
+      createParticle(); //creates particle every frame
+
+  }
   window.requestAnimationFrame(animate);
   for (let i = 0; i<particles.length; i++){
     particles[i].run();
@@ -25,8 +30,8 @@ function animate(){
 function createParticle(){
   for (let i = 0; i<1; i++){ //Setting the value to >1 creates multiple particles each frame
     let radius = 15;
-    let x = canvas.width/2 + Math.random()*100-50; //middle of the canvas, with up to 50 pixels of variation in each direction
-    let y = canvas.height/2 +Math.random()*100-50;
+    let x = mouseX + Math.random()*100-50; //middle of the canvas, with up to 50 pixels of variation in each direction
+    let y = mouseY +Math.random()*100-50;
     let dx = Math.random()*5 - 2.5; //initial velocity of x, can be anywhere from -2.5 to 2.5.
     let dy = Math.random()*7.5 - 3.75; //can be anywhere from -3.75 to 3.75
     let r = Math.floor(Math.random()*255);
@@ -37,4 +42,9 @@ function createParticle(){
     let life = Math.floor(Math.random()*90)+90; //particle can last from 1.5 to 3 seconds
     particles.push(new Particle(x, y, dx, dy, radius, clr, life, r, g, b))
     }
+  }
+  function clickHandler(event){
+    mouseX = event.clientX-10;
+    mouseY = event.clientY-10;
+    mouseDown = true;
   }

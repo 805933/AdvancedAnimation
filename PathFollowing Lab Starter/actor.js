@@ -25,6 +25,28 @@ class Actor {
     update(){
         // move this actor along the path until it reaches the end of
         // the path and dies
+        if(this.target.x<this.loc.x){
+          console.log("x<lx");
+          this.vel.x = .5;
+        }
+        if(this.target.x>this.loc.x){
+          console.log("x>lx");
+          this.vel.x = .5;
+        }
+        if(this.target.y<this.loc.y){
+          //console.log("y<ly");
+          this.vel.y = .5;
+        }
+        if(this.target.y>this.loc.y){
+          //console.log("y>ly");
+          this.vel.y = .5;
+        }
+        this.loc.add(this.vel);
+        if (this.loc.x == this.target.x && this.loc.y == this.target.y){
+          this.pathIndex++;
+          console.log("equal");
+        }
+        //console.log(this.loc.x + "  " + this.target.x + "  " + this.loc.y + "  " + this.target.y);
     }
 
     render(){
