@@ -21,16 +21,18 @@ function animate(){
 function createSegment(){
   for (let i = 0; i<5; i++){
     let size = 20;
-    let x = Math.random() * 100;
-    let y = Math.random() * 100;
+    let x = 200-20*i;
+    let y = 200-20*i;
     let dx = 2;
     let dy = 2;
     if (i == 0){
       head = new Head(x,y,dx,dy,size);
+      console.log(200-20*i);
     }
     else{
       size = 15;
       segments.push(new Segment(x,y,dx,dy,size))
+      console.log(x);
     }
   }
 }

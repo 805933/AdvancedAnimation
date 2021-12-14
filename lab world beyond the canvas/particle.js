@@ -11,6 +11,7 @@ class Particle{
     this.r = r;
     this.g = g;
     this.b = b;
+    this.checkChaosMode = false;
     this.initialLife = this.life; //used to make sure that the opacity fades at a linear rate
     //this.flipped = false;
   } //required for variation in the initialization
@@ -29,6 +30,10 @@ class Particle{
     this.loc.add(this.vel); //adds velocity to location
     if (this.loc.distance(triangle.loc)<this.radius){
       triangle.velLimit = 1;
+    }
+    if (this.loc.distance(head.loc)<this.radius){
+      head.vel = 1;
+      this.checkChaosMode = true;
     }
     if (this.isFlipped){
       this.vel.sub(this.acc); //adds acceleration to velocity
@@ -54,6 +59,9 @@ class Particle{
     else{
       return false;
     } //checks if the ball ran out of hitpoints
+  }
+  chaosModeCheck(){
+    return this.checkChaosMode;
   }
   draw(){
     context.beginPath();

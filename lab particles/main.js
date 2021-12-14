@@ -12,9 +12,8 @@ function init(){
 }
 function animate(){
   context.clearRect(0,0,canvas.width,canvas.height);
-  if (mouseDown){
+  if (mouseDown == true){
       createParticle(); //creates particle every frame
-
   }
   for (let i = 0; i<particles.length; i++){
     particles[i].run();

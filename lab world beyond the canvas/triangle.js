@@ -24,6 +24,7 @@ class Triangle{
     this.canvasLoc = new JSVector(x,y);
   }
 
+/*
   getLocX(){
     return this.loc.x;
   }
@@ -39,7 +40,7 @@ class Triangle{
   setLocY(y){
     this.loc.y = y;
   }
-
+*/
   update(){
     this.acc = JSVector.subGetNew(target.loc,this.loc);
     this.acc.normalize();

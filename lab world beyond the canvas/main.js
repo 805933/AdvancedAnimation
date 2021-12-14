@@ -1,8 +1,9 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2, mouseXSub, mouseYSub, flipped, triangleLoc;
+var canvas, context, canvasLocation, canvas2, context2, mouseXSub, mouseYSub, flipped, triangleLoc, head;
 var particles = [];
+var segments = [];
 let mouseX = mouseY = 0;
-let mouseDownMain = mouseDownSub = isFlipped = false;
+let mouseDownMain = mouseDownSub = isFlipped = enableChaosMode = false;
 bounds = {
   width: 2000,
   height: 2000,
@@ -23,7 +24,7 @@ function init(){
   loadTriangle(); //loads the triangleLoc
   //this.triangleLoc = new JSVector(triangle.getLocX(),triangle.getLocY());
   loadTarget();
-
+  createSegment();
   animate();
 }
 function animate(){
@@ -50,6 +51,12 @@ function animate(){
     context.lineWidth = 1.5;
     particles[i].draw();
   }
+  for (let i = 0; i<segments.length; i++){
+    segments[i].draw();
+  }
+  context.lineWidth = 1.5
+  head.draw();
+  context.lineWidth = 5;
   context.restore();
 
   context2.clearRect(0,0,canvas2.width,canvas2.height);
@@ -88,10 +95,22 @@ function animate(){
     particles[i].draw2();
     //console.log(particles[i].flipped);
     particles[i].flipped(isFlipped);
+    if (particles[i].chaosModeCheck() == true){
+      enableChaosMode = true;
+    }
     if (particles[i].isDead() == true){
       particles.splice(i,1);
       i--; //stops rendering if the particle has 'died'
     }
+  }
+  for (let i = 0; i<segments.length; i++){
+    segments[i].draw2();
+    segments[i].update();
+    segments[i].chaosModeSetter(enableChaosMode);
+  }
+  head.update();
+  if (enableChaosMode == false){
+    head.draw2();
   }
   if(mouseDownSub){
     canvasLocation.x = mouseXSub * 10
@@ -135,10 +154,23 @@ function animate(){
       //console.log(mouseX + "   " + mouseY);
       }
     }
-    function updateTriangle(){
-      //triangle.setLocX(this.triangleLoc.x);
-      //triangle.setLocY(this.triangleLoc.y);
+    function createSegment(){
+      for (let i = 0; i<8; i++){
+        let size = 20;
+        let x = 200-20*i;
+        let y = 200-20*i;
+        let dx = 3;
+        let dy = 3;
+        if (i == 0){
+          head = new Head(x,y,dx,dy,size);
+        }
+        else{
+          size = 15;
+          segments.push(new Segment(x,y,dx,dy,size))
+        }
+      }
     }
+
 function keyPressHandler(event){
   if(event.code == "KeyW"){
     {
@@ -175,7 +207,7 @@ function clickHandler(event){
   mouseYSub = mouseYCheck = event.clientY+10;
   console.log("pre modification:" + mouseX+ "  "+ mouseY)
   console.log("canvas width:"+ canvas.width)
-  if(mouseXSub>canvas.width+5 && mouseXSub<canvas.width+canvas2.width+5 && mouseYSub<650 && mouseYSub>650-canvas.height){
+  if(mouseXSub>canvas.width+5 && mouseXSub<canvas.width+canvas2.width+5 && mouseYSub<750 && mouseYSub>550-canvas.height){
     mouseXSub -= canvas.width+5 + 160;
     mouseYSub -= 550
     console.log(mouseX+ "  "+mouseY);

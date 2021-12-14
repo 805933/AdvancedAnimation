@@ -12,15 +12,11 @@ class Segment{
     this.update();
   }
   draw(){
-    context.save();
-    context.translate(this.loc.x, this.loc.y);
-    context.rotate(this.vel.getDirection()+Math.PI);
     context.beginPath();
     context.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI);
     context.strokeStyle = "black";  // color to fill
     context.fill();     // render the fill
     context.stroke();
-    context.restore();
   }
   update(){
     this.loc.add(this.vel);
@@ -32,6 +28,6 @@ class Segment{
     }
   }
   follow(){
-    
+
   }
 }
