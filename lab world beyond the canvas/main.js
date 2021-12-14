@@ -1,7 +1,8 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2, mouseX, mouseY, flipped
+var canvas, context, canvasLocation, canvas2, context2, mouseXSub, mouseYSub, flipped, triangleLoc;
 var particles = [];
-let mouseDown = isFlipped = false;
+let mouseX = mouseY = 0;
+let mouseDownMain = mouseDownSub = isFlipped = false;
 bounds = {
   width: 2000,
   height: 2000,
@@ -19,7 +20,8 @@ function init(){
   canvasLocation = new JSVector(0,0);
   window.addEventListener("keypress", keyPressHandler);
   window.addEventListener("click", clickHandler);
-  loadBalls(1); //load a specified number of balls
+  loadTriangle(); //loads the triangleLoc
+  //this.triangleLoc = new JSVector(triangle.getLocX(),triangle.getLocY());
   loadTarget();
 
   animate();
@@ -45,17 +47,8 @@ function animate(){
   target.draw();
 
   for (let i = 0; i<particles.length; i++){
-    //particles[i].update();
     context.lineWidth = 1.5;
     particles[i].draw();
-    //console.log(particles[i].flipped);
-/*
-    particles[i].flipped(isFlipped);
-    if (particles[i].isDead() == true){
-      particles.splice(i,1);
-      i--; //stops rendering if the particle has 'died'
-    }
-    */
   }
   context.restore();
 
@@ -86,7 +79,8 @@ function animate(){
   target.draw2();
   triangle.update();
   triangle.draw2();
-  if (mouseDown){
+  //updateTriangle();
+  if (mouseDownMain){
       createParticle(); //creates particle every frame
   }
   for (let i = 0; i<particles.length; i++){
@@ -99,6 +93,11 @@ function animate(){
       i--; //stops rendering if the particle has 'died'
     }
   }
+  if(mouseDownSub){
+    canvasLocation.x = mouseXSub * 10
+    canvasLocation.y = mouseYSub* 10
+    mouseDownSub = false;
+  }
   context2.restore();
   window.requestAnimationFrame(animate);
   }
@@ -110,8 +109,7 @@ function animate(){
     target = new Target(x, y, r, color)
   }
 
-  function loadBalls(n){ //initialization and creation of ball instances
-    for (let i = 0; i<n; i++){
+  function loadTriangle(){ //initialization and creation of ball instances
       let x = Math.random()*150;
       let y = Math.random()*150;
       let dx = Math.random() + 2;
@@ -119,7 +117,6 @@ function animate(){
       let r = 40;
       let color = "red";
       triangle = new Triangle(x, y, dx, dy, r, color) //create new ball instance with set variables
-    }
   }
   function createParticle(){
     for (let i = 0; i<1; i++){ //Setting the value to >1 creates multiple particles each frame
@@ -138,6 +135,10 @@ function animate(){
       //console.log(mouseX + "   " + mouseY);
       }
     }
+    function updateTriangle(){
+      //triangle.setLocX(this.triangleLoc.x);
+      //triangle.setLocY(this.triangleLoc.y);
+    }
 function keyPressHandler(event){
   if(event.code == "KeyW"){
     {
@@ -154,11 +155,7 @@ function keyPressHandler(event){
     canvasLocation.x -= -10;
   }
   if(event.code == "KeyC"){
-    console.log("canvasLocX"+canvasLocation.x)
-    console.log("canvasLocY"+canvasLocation.y);
-    console.log("canvasLocXMod"+canvasLocation.x+800);
-    console.log("canvasLocYMod"+canvasLocation.y+600);
-    console.log(""+canvasLocation.x+","+canvasLocation.y+","+(800+canvasLocation.x)+","+(600+canvasLocation.y))
+    console.log(canvas.width + canvas2.width + 5);
 
   }
   if(event.code == "KeyF"){
@@ -171,7 +168,24 @@ function keyPressHandler(event){
   }
 }
 function clickHandler(event){
-  mouseX = event.clientX+canvasLocation.x-10;
-  mouseY = event.clientY+canvasLocation.y-10;
-  mouseDown = true;
+
+  //mouseX = event.clientX+10;
+  //mouseY = event.clientY+10;
+  mouseXSub = mouseXCheck = event.clientX+10;
+  mouseYSub = mouseYCheck = event.clientY+10;
+  console.log("pre modification:" + mouseX+ "  "+ mouseY)
+  console.log("canvas width:"+ canvas.width)
+  if(mouseXSub>canvas.width+5 && mouseXSub<canvas.width+canvas2.width+5 && mouseYSub<650 && mouseYSub>650-canvas.height){
+    mouseXSub -= canvas.width+5 + 160;
+    mouseYSub -= 550
+    console.log(mouseX+ "  "+mouseY);
+    mouseDownSub = true;
+  }
+  else if(mouseXCheck<canvas.width-10 && mouseYCheck<canvas.height-10){
+      mouseX = event.clientX+10;
+      mouseY = event.clientY+10;
+      mouseX += canvasLocation.x;
+      mouseY += canvasLocation.y;
+      mouseDownMain = true;// 805 345
+    }
 }

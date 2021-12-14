@@ -11,6 +11,7 @@ class Triangle{
     this.color = color;
     this.canvas = document.getElementById("cnv");
     this.context = this.canvas.getContext("2d");
+    this.velLimit = 4;
   }
   run(){
     this.update();
@@ -23,13 +24,30 @@ class Triangle{
     this.canvasLoc = new JSVector(x,y);
   }
 
+  getLocX(){
+    return this.loc.x;
+  }
+
+  getLocY(){
+    return this.loc.y;
+  }
+
+  setLocX(x){
+    this.loc.x = x;
+  }
+
+  setLocY(y){
+    this.loc.y = y;
+  }
+
   update(){
     this.acc = JSVector.subGetNew(target.loc,this.loc);
     this.acc.normalize();
     this.acc.multiply(.1);
     this.vel.add(this.acc);
-    this.vel.limit(4);
+    this.vel.limit(this.velLimit);
     this.loc.add(this.vel);
+    this.velLimit = 4;
     //this.loc.add(this.canvasLoc);
   }
   draw(){

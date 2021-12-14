@@ -18,7 +18,6 @@ class Particle{
     this.update();
     this.draw();
     this.draw2();
-    //console.log(main.getFlipped());
   }
 
   flipped(isFlipped){
@@ -28,6 +27,9 @@ class Particle{
 
   update(){
     this.loc.add(this.vel); //adds velocity to location
+    if (this.loc.distance(triangle.loc)<this.radius){
+      triangle.velLimit = 1;
+    }
     if (this.isFlipped){
       this.vel.sub(this.acc); //adds acceleration to velocity
     }
