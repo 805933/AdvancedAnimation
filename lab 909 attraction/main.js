@@ -3,7 +3,7 @@ window.addEventListener("load", init);
 //IMPORTANT: For looking up new terms, go to http://developer.mozilla.org
 // global variables
 var canvas, context;
-var ball = {}; //may not need
+//var ball = {}; //may not need
 var balls = []; //make balls array
 var specialBalls = []; //array of special balls that contains attraction/repulsion balls
 

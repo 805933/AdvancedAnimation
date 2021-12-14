@@ -1,7 +1,8 @@
 window.addEventListener("load", init);
-var canvas, context, canvasLocation, canvas2, context2, mouseXSub, mouseYSub, flipped, triangleLoc, head;
+var canvas, context, canvasLocation, canvas2, context2, mouseXSub, mouseYSub, flipped, triangleLoc, head, specialBall;
 var particles = [];
 var segments = [];
+var balls = [];
 let mouseX = mouseY = 0;
 let mouseDownMain = mouseDownSub = isFlipped = enableChaosMode = false;
 bounds = {
@@ -25,6 +26,8 @@ function init(){
   //this.triangleLoc = new JSVector(triangle.getLocX(),triangle.getLocY());
   loadTarget();
   createSegment();
+  loadBalls(25);
+  loadSpecial();
   animate();
 }
 function animate(){
@@ -46,15 +49,17 @@ function animate(){
   //triangle.getCanvasLocation(canvasLocation.x, canvasLocation.y);
   triangle.draw();
   target.draw();
-
+  context.lineWidth = 1.5;
   for (let i = 0; i<particles.length; i++){
-    context.lineWidth = 1.5;
     particles[i].draw();
   }
   for (let i = 0; i<segments.length; i++){
     segments[i].draw();
   }
-  context.lineWidth = 1.5
+  for (let i = 0; i<balls.length; i++){
+    balls[i].draw();
+  }
+  specialBall.draw();
   head.draw();
   context.lineWidth = 5;
   context.restore();
@@ -117,6 +122,14 @@ function animate(){
     canvasLocation.y = mouseYSub* 10
     mouseDownSub = false;
   }
+  for (let i = 0; i<balls.length; i++){
+    //balls[i].run();
+    balls[i].draw2(); //run functions for every loaded ball
+    balls[i].update();
+    //balls[i].colorChange();
+  }
+  specialBall.draw2();
+  specialBall.update();
   context2.restore();
   window.requestAnimationFrame(animate);
   }
@@ -170,6 +183,28 @@ function animate(){
         }
       }
     }
+    function loadBalls(n){ //initialization and creation of ball instances
+    for (let i = 0; i<n; i++){
+    let x = Math.random()*canvas.width;
+    let y = Math.random()*canvas.height;
+    let dx = Math.random()*10-5;
+    let dy = Math.random()*10-5;
+    let r = 15;
+    let color = "blue";
+    let isSpecialBall = false;
+    balls.push(new Ball(x, y, dx, dy, r, color, isSpecialBall)); //create new ball instance with set variables
+      }
+    }
+    function loadSpecial(){
+      let x = 50;
+      let y = 50;
+      let dx = Math.random() * 3 + 2;
+      let dy = Math.random() * 3 + 2;
+      let r = 20;
+      let color = "green";
+      let isSpecialBall = true;
+      specialBall = new Ball(x, y, dx, dy, r, color, isSpecialBall);
+    }
 
 function keyPressHandler(event){
   if(event.code == "KeyW"){
@@ -207,7 +242,7 @@ function clickHandler(event){
   mouseYSub = mouseYCheck = event.clientY+10;
   console.log("pre modification:" + mouseX+ "  "+ mouseY)
   console.log("canvas width:"+ canvas.width)
-  if(mouseXSub>canvas.width+5 && mouseXSub<canvas.width+canvas2.width+5 && mouseYSub<750 && mouseYSub>550-canvas.height){
+  if(mouseXSub>canvas.width+5 && mouseXSub<canvas.width+canvas2.width+50 && mouseYSub<750 && mouseYSub>550-canvas.height){
     mouseXSub -= canvas.width+5 + 160;
     mouseYSub -= 550
     console.log(mouseX+ "  "+mouseY);
